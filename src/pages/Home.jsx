@@ -7,9 +7,8 @@ import CourseCard from "../components/CourseCard";
 import Testimonials from "../components/Testimonials";
 import CourseTable from "../components/CourseTable";
 
-/* ================= COUNTDOWN ================= */
+/* ================= COUNTDOWN COMPONENT ================= */
 function CountdownTimer() {
-  // Set target date ONCE (9 days from now)
   const targetDate = React.useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() + 9);
@@ -18,11 +17,7 @@ function CountdownTimer() {
 
   const calculateTimeLeft = () => {
     const diff = targetDate - new Date();
-
-    if (diff <= 0) {
-      return { d: 0, h: 0, m: 0, s: 0 };
-    }
-
+    if (diff <= 0) return { d: 0, h: 0, m: 0, s: 0 };
     return {
       d: Math.floor(diff / (1000 * 60 * 60 * 24)),
       h: Math.floor((diff / (1000 * 60 * 60)) % 24),
@@ -37,46 +32,40 @@ function CountdownTimer() {
     const interval = setInterval(() => {
       setTime(calculateTimeLeft());
     }, 1000);
-
     return () => clearInterval(interval);
   }, [calculateTimeLeft]);
 
   return (
-    <div style={styles.timerContainer}>
-      <h2 style={styles.timerHeading}>🚀 New Batch Starting Soon!</h2>
-
-      <div style={styles.timerRow}>
+    <div className="timerContainer">
+      <h2 className="timerHeading">🚀 New Batch Starting Soon!</h2>
+      <div className="timerRow">
         <span>{time.d}d</span>:
         <span>{time.h}h</span>:
         <span>{time.m}m</span>:
         <span>{time.s}s</span>
       </div>
-
-      <button style={styles.timerButton}>Register Now</button>
+      <button className="timerButton">Register Now</button>
     </div>
   );
 }
 
-/* ================= HOME ================= */
+/* ================= MAIN HOME COMPONENT ================= */
 export default function Home() {
   const slides = [
     {
       video: V1,
       title: "Digital IT Service With Excellent Quality",
-      text:
-        "Providing expert web and mobile solutions, voice/non-voice services, and digital transformation strategies worldwide.",
+      text: "Providing expert web and mobile solutions, voice/non-voice services, and digital transformation strategies worldwide.",
     },
     {
       video: V2,
       title: "Excellent IT Services for Your Success",
-      text:
-        "We deliver world-class designing, development, software testing, e-commerce, and mobile application services globally.",
+      text: "We deliver world-class designing, development, software testing, e-commerce, and mobile application services globally.",
     },
     {
       video: V3,
       title: "Trusted Technology Partners for Your Growth",
-      text:
-        "Offering premium support, cloud solutions, automation, and business-ready digital products.",
+      text: "Offering premium support, cloud solutions, automation, and business-ready digital products.",
     },
   ];
 
@@ -87,7 +76,6 @@ export default function Home() {
     const timer = setTimeout(() => {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 4000);
-
     return () => clearTimeout(timer);
   }, [index, slides.length]);
 
@@ -99,42 +87,221 @@ export default function Home() {
   }, [index]);
 
   return (
-    <>
-      {/* HERO */}
-      <div style={styles.heroContainer}>
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          style={styles.videoBackground}
-        >
+    <div className="home-wrapper">
+      <style>{`
+        /* 1. Global & Hero Styles */
+        .home-wrapper {
+          font-family: 'Inter', sans-serif;
+          overflow-x: hidden;
+        }
+        .heroContainer {
+          height: 100vh;
+          position: relative;
+          overflow: hidden;
+          border-radius: 18px;
+          margin: 10px;
+        }
+        .videoBackground {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 1;
+        }
+        .videoOverlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+          z-index: 2;
+        }
+        .textBox {
+          position: absolute;
+          top: 30%;
+          left: 8%;
+          z-index: 3;
+          max-width: 650px;
+          color: #9BFF6E;
+          padding: 20px;
+        }
+        .badge {
+          background: #3d42b9;
+          color: #fff;
+          padding: 10px 22px;
+          border-radius: 30px;
+          margin-bottom: 20px;
+          font-weight: bold;
+          display: inline-block;
+        }
+        .title {
+          font-size: clamp(32px, 5vw, 56px);
+          font-weight: 800;
+          margin-bottom: 20px;
+          line-height: 1.1;
+          color: #fff;
+        }
+        .text {
+          font-size: clamp(16px, 2vw, 20px);
+          font-weight: 500;
+          color: #e0e0e0;
+        }
+        .viewMore {
+          position: absolute;
+          bottom: 30px;
+          width: 100%;
+          text-align: center;
+          color: #fff;
+          z-index: 3;
+          animation: bounce 2s infinite;
+        }
+
+        /* 2. Timer Section */
+        .timerSection {
+          padding: 80px 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .timerContainer {
+          background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
+                      url('https://media.istockphoto.com/id/1343087913/photo/abstract-clock-deal-over-white-wall-realistic-3d.jpg?s=612x612&w=0&k=20&c=QSd9EkN263I5dbJKeRruhV5dSkooK0CV5Wo9pvx2Axg=');
+          background-size: cover;
+          background-position: center;
+          padding: 60px 40px;
+          border-radius: 24px;
+          text-align: center;
+          max-width: 800px;
+          width: 100%;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .timerHeading {
+          font-size: clamp(24px, 4vw, 42px);
+          margin-bottom: 20px;
+          color: #1a1a1a;
+        }
+        .timerRow {
+          font-size: clamp(28px, 5vw, 48px);
+          font-weight: 900;
+          color: #3d42b9;
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          margin-bottom: 30px;
+        }
+
+        /* 3. Course Cards Grid */
+        .courseSection {
+          padding: 80px 5%;
+          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                      url('https://static.vecteezy.com/system/resources/thumbnails/039/053/949/small/ai-generated-modern-interior-design-office-hall-with-conference-table-wooden-floor-and-dark-wall-background-photo.jpeg');
+          background-size: cover;
+          background-attachment: fixed;
+          border-radius: 30px;
+          margin: 0 20px 40px 20px;
+        }
+        .cardsGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 20px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        /* 4. Table Section - Fix Alignment */
+        .tableSection {
+          padding: 80px ;
+          background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                      url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72');
+          background-size: cover;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        /* Wraps the imported CourseTable for scrollability */
+        .tableContainer {
+          width: 100%;
+                  
+        }
+
+        /* 5. UI Components Fixes */
+        .timerButton {
+          background: #FFA000;
+          border: none;
+          padding: 16px 40px;
+          border-radius: 50px;
+          font-size: 18px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+        .timerButton:hover { transform: scale(1.05); }
+
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          40% {transform: translateY(-10px);}
+          60% {transform: translateY(-5px);}
+        }
+
+        /* ================= MEDIA QUERIES ================= */
+
+        /* iPad / Tablets */
+        @media (max-width: 1024px) {
+          .textBox { left: 5%; top: 25%; }
+          .cardsGrid { grid-template-columns: repeat(2, 1fr); }
+          .timerContainer { padding: 50px 20px; }
+        }
+
+        /* Mobile Phones */
+        @media (max-width: 768px) {
+          .heroContainer { height: 80vh; margin: 0; border-radius: 0; }
+          .textBox { 
+            top: 20%; 
+            left: 0; 
+            text-align: center; 
+            width: 100%; 
+            padding: 20px; 
+          }
+          .title { font-size: 28px; }
+          .cardsGrid { grid-template-columns: 1fr; }
+          .courseSection { margin: 10px; padding: 40px 15px; }
+          .timerRow { gap: 8px; font-size: 24px; }
+          .tableSection { padding: 20px; 
+                      font-size:8px; }
+          .tableContainer{ 
+                    width:80%;
+                    padding-right:80px;
+                    margin:0px;
+                    }            
+        }
+      `}</style>
+
+      {/* HERO SECTION */}
+      <div className="heroContainer">
+        <video ref={videoRef} autoPlay muted loop className="videoBackground">
           <source src={slides[index].video} type="video/mp4" />
         </video>
-
-        <div style={styles.videoOverlay} />
-
-        <div style={styles.textBox}>
-          <div style={styles.badge}>Only High Quality Services</div>
-          <h1 style={styles.title}>{slides[index].title}</h1>
-          <p style={styles.text}>{slides[index].text}</p>
+        <div className="videoOverlay" />
+        <div className="textBox">
+          <div className="badge">Only High Quality Services</div>
+          <h1 className="title">{slides[index].title}</h1>
+          <p className="text">{slides[index].text}</p>
         </div>
-
-        <div style={styles.viewMore}>
-          <span>View More</span>
+        <div className="viewMore">
+          <p style={{ margin: 0, fontSize: "14px" }}>View More</p>
           <FaChevronDown />
         </div>
       </div>
 
-      {/* TIMER */}
-      <section style={styles.timerSection}>
+      {/* TIMER SECTION */}
+      <section className="timerSection">
         <CountdownTimer />
       </section>
 
-      {/* COURSES */}
-      <section style={styles.courseSection}>
-        <h2 style={styles.courseHeading}>Our Top Courses</h2>
-
-        <div style={styles.cardsGrid}>
+      {/* COURSES SECTION */}
+      <section className="courseSection">
+        <h2 style={{ textAlign: "center", color: "white", fontSize: "32px", marginBottom: "40px" }}>
+          Our Top Courses
+        </h2>
+        <div className="cardsGrid">
           <CourseCard
             title="Web Development"
             desc="Master HTML, CSS, JavaScript, React & backend technologies."
@@ -158,149 +325,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COURSE TABLE */}
-      <section style={styles.tableSection}>
-        <CourseTable />
+      {/* COURSE TABLE SECTION */}
+      <section className="tableSection">
+        <div className="tableContainer">
+          <CourseTable />
+        </div>
       </section>
 
       <Testimonials />
-    </>
+    </div>
   );
 }
-
-/* ================= STYLES ================= */
-const styles = {
-  heroContainer: {
-    height: "100vh",
-    position: "relative",
-    overflow: "hidden",
-    borderRadius: "18px",
-  },
-
-  videoBackground: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    zIndex: 1,
-  },
-
-  videoOverlay: {
-    position: "absolute",
-    inset: 0,
-    background: "linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.4))",
-    zIndex: 2,
-  },
-
-  textBox: {
-    position: "absolute",
-    top: "30%",
-    left: "8%",
-    zIndex: 3,
-    maxWidth: "520px",
-    color: "#9BFF6E",
-  },
-
-  badge: {
-    background: "#3d42b9",
-    color: "#fff",
-    padding: "10px 22px",
-    borderRadius: "30px",
-    marginBottom: "20px",
-    fontWeight: "bold",
-    display: "inline-block",
-  },
-
-  title: {
-    fontSize: "48px",
-    fontWeight: "700",
-    marginBottom: "20px",
-  },
-
-  text: {
-    fontSize: "18px",
-    fontWeight: "bold",
-  },
-
-  viewMore: {
-    position: "absolute",
-    bottom: "30px",
-    width: "100%",
-    textAlign: "center",
-    color: "#fff",
-    fontSize: "14px",
-  },
-
-  timerSection: {
-    padding: "60px 20px",
-    display: "flex",
-    justifyContent: "center",
-    backgroundSize: "cover",
-  },
-
-  timerContainer: {
-    backgroundImage: "url('https://media.istockphoto.com/id/1343087913/photo/abstract-clock-deal-over-white-wall-realistic-3d.jpg?s=612x612&w=0&k=20&c=QSd9EkN263I5dbJKeRruhV5dSkooK0CV5Wo9pvx2Axg=')",
-    backgroundSize: "cover",
-    padding: "150px 440px" ,
-    borderRadius: "18px",
-    textAlign: "center",
-    color: "#0f0f0fff",
-    maxWidth: "600px",
-    width: "100%",
-  },
-
-  timerHeading: {
-    fontSize: "47px",
-    marginBottom: "30px",
-  },
-
-  timerRow: {
-    fontSize: "38px",
-    fontWeight: "800",
-    color: "#090909ff",
-    display: "flex",
-    justifyContent: "center",
-    gap: "8px",
-    marginBottom: "30px",
-  },
-
-  timerButton: {
-    background: "#FFA000",
-    border: "none",
-    padding: "14px 36px",
-    borderRadius: "30px",
-    fontSize: "18px",
-    fontWeight: "600",
-    cursor: "pointer",
-  },
-
-  courseSection: {
-    padding: "80px 20px",
-    backgroundImage: "url('https://static.vecteezy.com/system/resources/thumbnails/039/053/949/small/ai-generated-modern-interior-design-office-hall-with-conference-table-wooden-floor-and-dark-wall-background-photo.jpeg')",
-    backgroundSize: "cover",
-    marginBottom: "40px",
-    borderRadius: "25px"
-  },
-
-  courseHeading: {
-    textAlign: "center",
-    fontSize: "32px",
-    marginBottom: "40px",
-    color: "white"
-  },
-
-  cardsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
-    gap: "16px",
-    maxWidth: "1200px",
-    margin: "auto",
-  },
-
-  tableSection: {
-    padding: "80px 20px",
-    background:
-      "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72')",
-    backgroundSize: "cover",
-  },
-};

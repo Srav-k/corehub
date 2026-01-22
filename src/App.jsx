@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Pages
-import Home from "./pages/home";
-import About from "./pages/about";
-import Courses from "./pages/courses";
-import ContactUs from "./pages/contactus";
+// Pages (✅ FIXED CASE-SENSITIVE IMPORTS)
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Courses from "./pages/Courses";
+import ContactUs from "./pages/Contactus";
 
 // Components
 import Header from "./components/Header";
@@ -20,7 +20,6 @@ import TermsConditions from "./components/TermsConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import ReturnRefund from "./components/ReturnRefund";
 
-
 export default function App() {
   return (
     <Router>
@@ -35,16 +34,16 @@ export default function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:courseId" element={<ViewDetails />} />
 
-          {/* ✅ FIXED ROUTE */}
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/login" element={<LoginForm />} />
 
-           <Route path="/terms" element={<TermsConditions />} />
-           <Route path="/privacy" element={<PrivacyPolicy />} />
-           <Route path="/refund" element={<ReturnRefund />} />
+          <Route path="/terms" element={<TermsConditions />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/refund" element={<ReturnRefund />} />
         </Routes>
-        <ChatBot /> 
+
+        <ChatBot />
         <Footer />
       </BackgroundWrapper>
     </Router>

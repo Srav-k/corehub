@@ -231,6 +231,7 @@ export default function ContactUs() {
           </motion.div>
         ))}
       </div>
+      
 
       {/* FORM & MAP WRAPPER */}
       <div className="form-map-wrapper">

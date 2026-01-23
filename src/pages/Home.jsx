@@ -144,16 +144,7 @@ export default function Home() {
           font-weight: 500;
           color: #e0e0e0;
         }
-        .viewMore {
-          position: absolute;
-          bottom: 30px;
-          width: 100%;
-          text-align: center;
-          color: #fff;
-          z-index: 3;
-          animation: bounce 2s infinite;
-        }
-
+        
         /* 2. Timer Section */
         .timerSection {
           padding: 80px 20px;
@@ -246,7 +237,9 @@ export default function Home() {
         /* iPad / Tablets */
         @media (max-width: 1024px) {
           .textBox { left: 5%; top: 25%; }
-          .cardsGrid { grid-template-columns: repeat(2, 1fr); }
+          .cardsGrid { grid-template-columns: repeat(2, 1fr); width: 100%; }
+          .cardsGrid > * { width: 100%; max-width: 100%; }
+          .courseSection {  margin: 20px; }
           .timerContainer { padding: 50px 20px; }
         }
 
@@ -262,13 +255,14 @@ export default function Home() {
           }
           .title { font-size: 28px; }
           .cardsGrid { grid-template-columns: 1fr; }
+          .cardsGrid > * { width: 100%; max-width: 100%; }
           .courseSection { margin: 10px; padding: 40px 15px; }
           .timerRow { gap: 8px; font-size: 24px; }
           .tableSection { padding: 20px; 
                       font-size:8px; }
           .tableContainer{ 
-                    width:80%;
-                    padding-right:80px;
+                    width:100%;
+                    padding:0px;
                     margin:0px;
                     }            
         }
@@ -285,11 +279,7 @@ export default function Home() {
           <h1 className="title">{slides[index].title}</h1>
           <p className="text">{slides[index].text}</p>
         </div>
-        <div className="viewMore">
-          <p style={{ margin: 0, fontSize: "14px" }}>View More</p>
-          <FaChevronDown />
-        </div>
-      </div>
+            </div>
 
       {/* TIMER SECTION */}
       <section className="timerSection">
